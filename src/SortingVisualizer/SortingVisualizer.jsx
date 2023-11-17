@@ -60,6 +60,8 @@ export default class SortingVisualizer extends React.Component {
   }
 
 
+
+
   quickSort() {
     const animations = getQuickSortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
@@ -68,7 +70,8 @@ export default class SortingVisualizer extends React.Component {
         if (isColorChange) {
             const [barOneIdx, barTwoIdx] = animations[i];
             const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style; // barTwoIdx may not exist for some swaps
+            // Check if barTwoIdx is defined
+            const barTwoStyle = barTwoIdx !== undefined ? arrayBars[barTwoIdx].style : null;
             const color = i % 4 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
             setTimeout(() => {
                 barOneStyle.backgroundColor = color;
@@ -82,7 +85,8 @@ export default class SortingVisualizer extends React.Component {
             }, i * ANIMATION_SPEED_MS);
         }
     }
-}
+  }
+
 
 
   heapSort() {
