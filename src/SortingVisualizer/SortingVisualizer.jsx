@@ -68,7 +68,7 @@ export default class SortingVisualizer extends React.Component {
         if (isColorChange) {
             const [barOneIdx, barTwoIdx] = animations[i];
             const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx]?.style; // barTwoIdx may not exist for some swaps
+            const barTwoStyle = arrayBars[barTwoIdx].style; // barTwoIdx may not exist for some swaps
             const color = i % 4 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
             setTimeout(() => {
                 barOneStyle.backgroundColor = color;
