@@ -1,5 +1,8 @@
 import React from 'react';
-import {getMergeSortAnimations, getQuickSortAnimations, getBubbleSortAnimations} from '../sortingAlgorithms/sortingAlgorithms.js';
+import {getMergeSortAnimations} from '../sortingAlgorithms/mergeSort.js';
+import {getQuickSortAnimations} from '../sortingAlgorithms/quickSort.js';
+import {getHeapSortAnimations} from '../sortingAlgorithms/heapSort.js';
+import {getBubbleSortAnimations} from '../sortingAlgorithms/bubbleSort.js';
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
@@ -91,8 +94,37 @@ export default class SortingVisualizer extends React.Component {
 
 
   heapSort() {
-
+    const animations = getHeapSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const isColorChange = i % 4 < 2;
+      if (isColorChange) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        // Check if elements exist before trying to access their style
+        const barOneStyle = barOneIdx !== undefined && arrayBars[barOneIdx] ? arrayBars[barOneIdx].style : null;
+        const barTwoStyle = barTwoIdx !== undefined && arrayBars[barTwoIdx] ? arrayBars[barTwoIdx].style : null;
+        const color = i % 4 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        setTimeout(() => {
+          if (barOneStyle) barOneStyle.backgroundColor = color;
+          if (barTwoStyle) barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        setTimeout(() => {
+          const [barOneIdx, newHeight, barTwoIdx, barTwoNewHeight] = animations[i];
+          if (barOneIdx !== undefined && arrayBars[barOneIdx]) {
+            const barOneStyle = arrayBars[barOneIdx].style;
+            barOneStyle.height = `${newHeight}px`;
+          }
+          if (barTwoIdx !== undefined && arrayBars[barTwoIdx]) {
+            const barTwoStyle = arrayBars[barTwoIdx].style;
+            barTwoStyle.height = `${barTwoNewHeight}px`;
+          }
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
   }
+  
+  
 
   bubbleSort() {
     const animations = getBubbleSortAnimations(this.state.array);

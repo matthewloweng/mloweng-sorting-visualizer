@@ -6,7 +6,7 @@ Work in progress.
 
 Features currently working on:
 Changing visualization speed
-Changing number of bars
-Quick Sort
-Heap Sort
-Bubble Sort
+Changing number of bars COMPLETE
+Quick Sort (Broken)
+Heap Sort (Broken)
+Bubble Sort COMPLETE
