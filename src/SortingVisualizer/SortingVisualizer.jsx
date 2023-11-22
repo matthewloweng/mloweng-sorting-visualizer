@@ -1,49 +1,51 @@
+// Import React and sorting algorithms
 import React from 'react';
-import {getMergeSortAnimations} from '../sortingAlgorithms/mergeSort.js';
-import {getQuickSortAnimations} from '../sortingAlgorithms/quickSort.js';
-import {getHeapSortAnimations} from '../sortingAlgorithms/heapSort.js';
-import {getBubbleSortAnimations} from '../sortingAlgorithms/bubbleSort.js';
+import { getMergeSortAnimations } from '../sortingAlgorithms/mergeSort.js';
+import { getQuickSortAnimations } from '../sortingAlgorithms/quickSort.js';
+import { getHeapSortAnimations } from '../sortingAlgorithms/heapSort.js';
+import { getBubbleSortAnimations } from '../sortingAlgorithms/bubbleSort.js';
 import './SortingVisualizer.css';
 
-// Change this value for the speed of the animations.
+// Constants for animation speed and number of bars in the visualizer
 const ANIMATION_SPEED_MS = 2;
-
-// Change this value for the number of bars (value) in the array.
 const NUMBER_OF_ARRAY_BARS = 310;
 
-// This is the main color of the array bars.
+// Primary and secondary colors for the array bars
 const PRIMARY_COLOR = 'turquoise';
-
-// This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = 'red';
 
+// Main SortingVisualizer component
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
     super(props);
-
+    // Initializing the state with an empty array and number of bars
     this.state = {
       array: [],
       numberOfBars: NUMBER_OF_ARRAY_BARS,
     };
   }
 
+  // Generate a new array when the component mounts
   componentDidMount() {
     this.resetArray();
   }
 
+  // Method to create a new array with random values
   resetArray() {
     const array = [];
     for (let i = 0; i < this.state.numberOfBars; i++) {
-      array.push(randomIntFromInterval(5, 600));
+      array.push(randomIntFromInterval(5, 600)); // Random values between 5 and 600
     }
-    this.setState({array});
+    this.setState({ array });
   }
 
+  // Merge Sort visualization
   mergeSort() {
     const animations = getMergeSortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
+      // Color change animations
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
@@ -54,6 +56,7 @@ export default class SortingVisualizer extends React.Component {
           barTwoStyle.backgroundColor = color;
         }, i * ANIMATION_SPEED_MS);
       } else {
+        // Height change animations
         setTimeout(() => {
           const [barOneIdx, newHeight] = animations[i];
           const barOneStyle = arrayBars[barOneIdx].style;
@@ -170,33 +173,68 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
+//   render() {
+//     const {array} = this.state;
+
+//     return (
+//       <div className="array-container">
+//         {array.map((value, idx) => (
+//           <div
+//             className="array-bar"
+//             key={idx}
+//             style={{
+//               backgroundColor: PRIMARY_COLOR,
+//               height: `${value}px`,
+//             }}></div>
+//         ))}
+//         <input
+//           type="number"
+//           value={this.state.numberOfBars}
+//           onChange={(e) => this.setState({ numberOfBars: parseInt(e.target.value)})}
+//         />
+//         <button onClick={() => this.resetArray()}>Set Number of Bars and Generate New Array</button>
+//         <button onClick={() => this.mergeSort()}>Merge Sort</button>
+//         <button onClick={() => this.quickSort()}>Quick Sort</button>
+//         <button onClick={() => this.heapSort()}>Heap Sort</button>
+//         <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+//         <button onClick={() => this.testSortingAlgorithms()}>
+//           Test Sorting Algorithms (BROKEN)
+//         </button>
+//       </div>
+//     );
+//   }
+// }
+
   render() {
-    const {array} = this.state;
+    const { array, numberOfBars } = this.state;
 
     return (
-      <div className="array-container">
-        {array.map((value, idx) => (
-          <div
-            className="array-bar"
-            key={idx}
-            style={{
-              backgroundColor: PRIMARY_COLOR,
-              height: `${value}px`,
-            }}></div>
-        ))}
-        <input
-          type="number"
-          value={this.state.numberOfBars}
-          onChange={(e) => this.setState({ numberOfBars: parseInt(e.target.value)})}
-        />
-        <button onClick={() => this.resetArray()}>Set Number of Bars and Generate New Array</button>
-        <button onClick={() => this.mergeSort()}>Merge Sort</button>
-        <button onClick={() => this.quickSort()}>Quick Sort</button>
-        <button onClick={() => this.heapSort()}>Heap Sort</button>
-        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-        <button onClick={() => this.testSortingAlgorithms()}>
-          Test Sorting Algorithms (BROKEN)
-        </button>
+      <div>
+        <div className="array-container">
+          {array.map((value, idx) => (
+            <div
+              className="array-bar"
+              key={idx}
+              style={{
+                height: `${value}px`,
+              }}></div>
+          ))}
+        </div>
+        <div className="controls">
+          <input
+            type="number"
+            value={numberOfBars}
+            placeholder="Number of Bars"
+            aria-label="Set number of bars"
+            onChange={(e) => this.setState({ numberOfBars: parseInt(e.target.value) || 5 })}
+          />
+          <button onClick={() => this.resetArray()}>Generate New Array</button>
+          <button onClick={() => this.mergeSort()}>Merge Sort</button>
+          <button onClick={() => this.quickSort()}>Quick Sort</button>
+          <button onClick={() => this.heapSort()}>Heap Sort</button>
+          <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+          <button onClick={() => this.testSortingAlgorithms()}>Test Algorithms</button>
+        </div>
       </div>
     );
   }
