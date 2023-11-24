@@ -173,37 +173,6 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-//   render() {
-//     const {array} = this.state;
-
-//     return (
-//       <div className="array-container">
-//         {array.map((value, idx) => (
-//           <div
-//             className="array-bar"
-//             key={idx}
-//             style={{
-//               backgroundColor: PRIMARY_COLOR,
-//               height: `${value}px`,
-//             }}></div>
-//         ))}
-//         <input
-//           type="number"
-//           value={this.state.numberOfBars}
-//           onChange={(e) => this.setState({ numberOfBars: parseInt(e.target.value)})}
-//         />
-//         <button onClick={() => this.resetArray()}>Set Number of Bars and Generate New Array</button>
-//         <button onClick={() => this.mergeSort()}>Merge Sort</button>
-//         <button onClick={() => this.quickSort()}>Quick Sort</button>
-//         <button onClick={() => this.heapSort()}>Heap Sort</button>
-//         <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-//         <button onClick={() => this.testSortingAlgorithms()}>
-//           Test Sorting Algorithms (BROKEN)
-//         </button>
-//       </div>
-//     );
-//   }
-// }
 
   render() {
     const { array, numberOfBars } = this.state;
